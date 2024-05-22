@@ -1,16 +1,19 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import Router from "./Router";
 
 const queryClient = new QueryClient();
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render(
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
+    <HashRouter>
       <Router />
-    </BrowserRouter>
-  </QueryClientProvider>,
-  document.getElementById("root")
+    </HashRouter>
+  </QueryClientProvider>
 );
