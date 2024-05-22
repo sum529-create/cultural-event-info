@@ -1,14 +1,13 @@
 {
   "files": {
     "main.css": "/cultural-event-info/static/css/main.3e8ccca2.css",
-    "main.js": "/cultural-event-info/static/js/main.6638ecea.js",
-    "static/media/axios.cjs": "/cultural-event-info/static/media/axios.22fc11ea5e9ce56fa9da.cjs",
+    "main.js": "/cultural-event-info/static/js/main.2acc0778.js",
     "index.html": "/cultural-event-info/index.html",
     "main.3e8ccca2.css.map": "/cultural-event-info/static/css/main.3e8ccca2.css.map",
-    "main.6638ecea.js.map": "/cultural-event-info/static/js/main.6638ecea.js.map"
+    "main.2acc0778.js.map": "/cultural-event-info/static/js/main.2acc0778.js.map"
   },
   "entrypoints": [
     "static/css/main.3e8ccca2.css",
-    "static/js/main.6638ecea.js"
+    "static/js/main.2acc0778.js"
   ]
 }
