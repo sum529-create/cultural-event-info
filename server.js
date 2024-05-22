@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const axiosInstance = require('./src/axiosInstance');
 const cors = require("cors");
