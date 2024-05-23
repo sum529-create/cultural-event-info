@@ -700,10 +700,10 @@ function Cultural() {
   const goBack = () => {
     if (window.location.host === "sum529-create.github.io")
       window.location.href =
-        "https://sum529-create.github.io/my-study_react/cultural-event-info/";
+        "https://sum529-create.github.io/cultural-event-info/";
     else {
       window.location.href =
-        window.location.origin + "/my-study_react/cultural-event-info/";
+        window.location.origin + "/cultural-event-info/";
     }
   };
   const handleButtonClick = () => {
