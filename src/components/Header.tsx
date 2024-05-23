@@ -68,7 +68,7 @@ const Header = () => {
         />
         <meta
           property="og:image"
-          content="https://sum529-create.github.io/my-study_react/cultural-event-info/mainImg.jpeg"
+          content="https://sum529-create.github.io/cultural-event-info/mainImg.jpeg"
         />
       </Helmet>
       <MyHeader>
