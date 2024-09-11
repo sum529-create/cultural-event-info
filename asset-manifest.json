@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/cultural-event-info/static/css/main.3e8ccca2.css",
-    "main.js": "/cultural-event-info/static/js/main.3808c9d8.js",
+    "main.js": "/cultural-event-info/static/js/main.0d0d4273.js",
     "index.html": "/cultural-event-info/index.html",
     "main.3e8ccca2.css.map": "/cultural-event-info/static/css/main.3e8ccca2.css.map",
-    "main.3808c9d8.js.map": "/cultural-event-info/static/js/main.3808c9d8.js.map"
+    "main.0d0d4273.js.map": "/cultural-event-info/static/js/main.0d0d4273.js.map"
   },
   "entrypoints": [
     "static/css/main.3e8ccca2.css",
-    "static/js/main.3808c9d8.js"
+    "static/js/main.0d0d4273.js"
   ]
 }
