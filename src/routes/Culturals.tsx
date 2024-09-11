@@ -610,7 +610,7 @@ function Culturals() {
     }
     try {
       const lastIdx = schList_totalCnt !== 0 ? schList_totalCnt : endIdx;
-      const firstIdx = schList_totalCnt !== 0 ? lastIdx - 8 : startIdx;
+      const firstIdx = schList_totalCnt !== 0 ? lastIdx - 11 : startIdx;
       const newData = await fetchCulturalInfo(firstIdx, lastIdx, {
         codeNm: selectCodeNm
           ? selectCodeNm === "전체" ||
