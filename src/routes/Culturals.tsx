@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import { formateDate } from "../utils/helpers";
 import _ from "lodash"; // lodash 라이브러리 import
 import { ICulturalResponse } from "../cultural";
+import React from "react";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -371,21 +372,25 @@ const CultureList = styled.div`
   clear: both;
   ul {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     list-style: none;
+    gap:20px;
     li {
       overflow: hidden;
       border-radius: 10px;
       padding: 20px 20px 54px 20px;
       border: 1px solid #e2e2e2;
-      width: 30%;
-      margin: 0 1.66% 3.33%;
+      width: calc(25% - 15px);
       position: relative;
       font-size: 18px;
       font-weight: 500;
       color: #222;
-      @media (max-width: 1025px) {
-        width: 46.68%;
+      @media (max-width: 1400px) {
+        width: calc(33.33% - 15px);
+      }
+      @media (max-width: 1024px) {
+        width: calc(50% - 15px);
       }
       @media (max-width: 768px) {
         width: 100%;
@@ -396,7 +401,8 @@ const CultureList = styled.div`
         margin: 20px 0 25px;
       }
       &:hover {
-        border: 1px solid #3b3b3b;
+        /* border: 1px solid #3b3b3b; */
+        box-shadow: 0 13px 27px -5px rgba(50, 50, 93, .25), 0 8px 16px -8px rgba(0, 0, 0, .3), 0 -6px 16px -6px rgba(0, 0, 0, .025);
         background-color: #f7f7f7;
         p {
           text-decoration: underline;
@@ -466,7 +472,7 @@ const Date = styled.div`
     font-size: 16px;
     position: absolute;
     left: -20px;
-    top: -1px;
+    top: 2px;
   }
   @media (max-width: 768px) {
     font-size: 18px;
@@ -553,7 +559,7 @@ const TopArrowButton = styled.button<{ $isVisible: boolean }>`
   }
 `;
 function Culturals() {
-  const { startIdx: initialStartIdx = 1, endIdx: initialEndIdx = 9 } =
+  const { startIdx: initialStartIdx = 1, endIdx: initialEndIdx = 12 } =
     useOutletContext<RouteParams>() || {};
   const [startIdx, setStartIdx] = useState(initialStartIdx);
   const [endIdx, setEndIdx] = useState(initialEndIdx);
@@ -567,6 +573,7 @@ function Culturals() {
   const [isSelectRegSort, setIsSelectRegSort] = useState(false);
   const isMounted = useRef(false);
   const isRegMounted = useRef(false);
+  const [pageMaxNum, setPageMaxNum] = useState(0);
   let searchTitle = useRef<HTMLInputElement>(document.createElement("input"));
   const onClickSearch = async (): Promise<ICulturalResponse> => {
     const searchTit = searchTitle.current.value;
@@ -585,7 +592,7 @@ function Culturals() {
     }
     if ((culturalDate || selectCodeNm || searchTit) && isSelectRegSort) {
       try {
-        const newData = await fetchCulturalInfo(1, 9, {
+        const newData = await fetchCulturalInfo(1, 12, {
           codeNm: selectCodeNm
             ? selectCodeNm === "전체" ||
               selectCodeNm === "" ||
@@ -654,18 +661,25 @@ function Culturals() {
   const handlePageChange = async ({ selected }: { selected: number }) => {
     try {
       window.scrollTo(0, 300);
-      let newStartIdx = 1;
+      
+      // let newStartIdx = 1;
 
-      if (isSelectRegSort && fetchData) {
-        newStartIdx =
-          fetchData?.list_total_count - 8 * (selected + 1) - selected;
-      } else {
-        newStartIdx = selected * 9 + 1;
-      }
+      // if (isSelectRegSort && fetchData) {
+      //   newStartIdx =
+      //     fetchData?.list_total_count - 8 * (selected + 1) - selected;
+      // } else {
+      //   newStartIdx = selected * 9 + 1;
+      // }
 
-      let newEndIdx = newStartIdx + 8;
-      if (newEndIdx <= 9) newEndIdx = 9;
-      if (newStartIdx < 1) newStartIdx = 1;
+      // let newEndIdx = newStartIdx + 8;
+      // if (newEndIdx <= 9) newEndIdx = 9;
+      // if (newStartIdx < 1) newStartIdx = 1;
+
+      let newStartIdx = selected * 12 + 1;
+    let newEndIdx = newStartIdx + 11;
+
+    if (newEndIdx <= 12) newEndIdx = 12;
+    if (newStartIdx < 1) newStartIdx = 1;
 
       setStartIdx(newStartIdx);
       setEndIdx(newEndIdx);
@@ -729,7 +743,7 @@ function Culturals() {
     }
     if (!isSelectRegSort) {
       try {
-        const newData = await fetchCulturalInfo(1, 9, {
+        const newData = await fetchCulturalInfo(1, 12, {
           codeNm: " ",
           title: " ",
           date: thisMonth,
@@ -752,7 +766,7 @@ function Culturals() {
     if (isSelectSort) {
       setIsSelectSort(false);
       setStartIdx(1);
-      setEndIdx(9);
+      setEndIdx(12);
       await onClickSearch();
       // await onClickSearchReset(); //
     }
@@ -809,7 +823,7 @@ function Culturals() {
               .then((newData) => {
                 if (newData && newData.row.length > 0) {
                   // setStartIdx((prevStartIdx) => prevStartIdx + 9);
-                  setEndIdx((prevEndIdx) => prevEndIdx + 9);
+                  setEndIdx((prevEndIdx) => prevEndIdx + 12);
                   setHasMoreData(true);
                 } else {
                   setHasMoreData(false); // 더 이상 데이터가 없음을 설정
@@ -854,7 +868,7 @@ function Culturals() {
     setSelectCodeNm(" ");
     searchTitle.current.value = "";
     setStartIdx(1);
-    setEndIdx(9);
+    setEndIdx(12);
     const newData = await fetchCulturalInfo(startIdx, endIdx, {
       codeNm: " ",
       title: " ",
@@ -879,8 +893,8 @@ function Culturals() {
     e.preventDefault();
     var maxPgNum = 0;
     if (data || fetchData)
-      maxPgNum = Math.ceil((fetchData?.list_total_count ?? 0) / 9);
-
+      maxPgNum = Math.ceil((fetchData?.list_total_count ?? 0) / 12);
+    setPageMaxNum(maxPgNum)
     // if (currentPage + 10 > maxPgNum) {
     setCurrentPage(maxPgNum - 1);
     handlePageChange({ selected: maxPgNum - 1 });
@@ -970,7 +984,7 @@ function Culturals() {
                 onClick={toggleRegSort}
                 style={isSelectRegSort ? { color: "#ac2f30" } : {}}
               >
-                최신순
+                전체
               </li>
             </ul>
           </div>
@@ -1022,33 +1036,41 @@ function Culturals() {
                   ))}
                 </ul>
               </CultureList>
-              <Pagination>
-                <a
-                  href="javascript;"
-                  className="prePage"
-                  onClick={goToPreviousPage}
-                >
-                  &lt;&lt;
-                </a>
+                <Pagination>
+                  {
+                    currentPage + 1 > 5 && (
+                      <a
+                        href="javascript;"
+                        className="prePage"
+                        onClick={goToPreviousPage}
+                      >
+                        &lt;&lt;
+                      </a>
+                    )
+                  }
                 <ReactPaginate
                   previousLabel={"<"}
                   nextLabel={">"}
                   breakLabel={""}
-                  pageCount={Math.ceil((fetchData?.list_total_count ?? 0) / 9)} // 전체 페이지 수
+                  pageCount={Math.ceil((fetchData?.list_total_count ?? 0) / 12)} // 전체 페이지 수
                   marginPagesDisplayed={0}
                   pageRangeDisplayed={9}
                   onPageChange={handlePageChange}
                   containerClassName={"pagination"}
                   activeClassName={"active"}
                   forcePage={currentPage}
-                />
-                <a
-                  href="javacript;"
-                  className="nextPage"
-                  onClick={goToNextPage}
-                >
-                  &gt;&gt;
-                </a>
+                  />
+                  {
+                    pageMaxNum !== currentPage + 1 && (
+                      <a
+                        href="javacript;"
+                        className="nextPage"
+                        onClick={goToNextPage}
+                      >
+                        &gt;&gt;
+                      </a>
+                    )
+                  }
               </Pagination>
             </>
           )

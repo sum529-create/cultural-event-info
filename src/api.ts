@@ -9,9 +9,12 @@ export const fetchCulturalInfo = async (
     date?: string;
   } = {}
 ) => {
-  const { codeNm, title, date } = options;
+  let { codeNm, title, date } = options;
   let url = `/api/cultural-event-info/${startIdx}/${endIdx}/`;
 
+  if (codeNm) codeNm = encodeURIComponent(codeNm);
+  if (title) title = encodeURIComponent(title);
+  
   if (codeNm) url += `${codeNm}/`;
   if (title) url += `${title}/`;
   if (date) url += `${date}/`;
